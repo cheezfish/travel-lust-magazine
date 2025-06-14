@@ -1,4 +1,5 @@
 // .eleventy.js
+
 module.exports = function(eleventyConfig) {
   // Tell Eleventy to copy our static folders to the final website
   eleventyConfig.addPassthroughCopy("admin");
@@ -12,11 +13,23 @@ module.exports = function(eleventyConfig) {
     });
   });
 
+  // Create a custom collection for the single featured issue
+  eleventyConfig.addCollection("featuredIssue", function(collectionApi) {
+    // Find the very first item that has isFeatured: true
+    return collectionApi.getAll().reverse().find(item => item.data.isFeatured);
+  });
+
+  // Create a custom collection for all archived (non-featured) issues
+  eleventyConfig.addCollection("archivedIssues", function(collectionApi) {
+    // Filter for all items that DO NOT have isFeatured: true
+    return collectionApi.getAll().reverse().filter(item => !item.data.isFeatured);
+  });
+
   return {
     dir: {
       input: ".",
       includes: "_includes",
-      output: "_site", // The folder where the final website is built
+      output: "_site",
     },
     templateFormats: ["md", "njk", "html"],
     markdownTemplateEngine: "njk",

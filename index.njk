@@ -1,0 +1,42 @@
+---
+layout: 'layout.njk'
+title: 'Home'
+---
+
+{# The logic is now in .eleventy.js! We just use the collections directly. #}
+{% set featuredIssue = collections.featuredIssue %}
+{% set archivedIssues = collections.archivedIssues %}
+
+{# --- FEATURED ISSUE SECTION --- #}
+{% if featuredIssue %}
+<section class="featured">
+    <h2>Current Featured Issue</h2>
+    <article>
+        <h3><a href="{{ featuredIssue.url }}">{{ featuredIssue.data.title }}</a></h3>
+        <p><em>Published on: {{ featuredIssue.date | readableDate }}</em></p>
+        {% if featuredIssue.data.summary %}
+            <p>{{ featuredIssue.data.summary }}</p>
+        {% endif %}
+        <a href="{{ featuredIssue.url }}" class="read-button">Read This Issue</a>
+    </article>
+</section>
+{% else %}
+    <h2>Welcome to Travel Lust</h2>
+    <p>The first issue will be published soon. Check back later!</p>
+{% endif %}
+
+
+{# --- ARCHIVE SECTION --- #}
+<section class="archive">
+    <h2>Archive</h2>
+    <ul>
+        {# We loop through the pre-filtered archivedIssues collection #}
+        {% for issue in archivedIssues %}
+            <li>
+                <a href="{{ issue.url }}">{{ issue.data.title }}</a> - <span>{{ issue.date | readableDate }}</span>
+            </li>
+        {% else %}
+            <li>No archived issues yet.</li>
+        {% endfor %}
+    </ul>
+</section>
