@@ -6,12 +6,13 @@
   <title>Content Manager</title>
 </head>
 <body>
-  <!-- Load the main CMS script -->
+  <!-- This loads the Decap CMS program -->
   <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
   <!-- 
-    This script waits for the entire page to be ready, THEN it provides
-    the configuration. This prevents the timing error.
+    This script waits for the page to be ready, then it provides the
+    configuration directly to the CMS program. This is the most
+    robust method possible.
   -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
@@ -22,6 +23,8 @@
             repo: 'cheezfish/travel-lust-magazine',
             branch: 'main',
             auth_type: 'github',
+
+            // Replace the placeholder below with your actual Client ID
             app_id: 'Ov23liEqTFb36oclI64c',
           },
           media_folder: 'assets/pdfs',
