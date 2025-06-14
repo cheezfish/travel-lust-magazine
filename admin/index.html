@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
-  
-  <!-- Load the CSS from the UNPKG CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/sveltia-cms-app@2/dist/sveltia-cms-app.css" />
-
-  <!-- Load the JavaScript from the UNPKG CDN -->
-  <script src="https://unpkg.com/sveltia-cms-app@2/dist/sveltia-cms-app.js"></script>
-
+  <!-- Use jsdelivr instead of unpkg for proper MIME types -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sveltia-cms-app@2/dist/sveltia-cms-app.css" />
 </head>
 <body>
-  <!-- Sveltia CMS will be mounted here -->
+  <!-- Use jsdelivr instead of unpkg -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/sveltia-cms-app@2/dist/sveltia-cms-app.js"></script>
 </body>
 </html>
