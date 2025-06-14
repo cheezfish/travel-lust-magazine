@@ -4,22 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
-  <!-- The failed <link> tag is gone. -->
 </head>
 <body>
   <!-- Load the main CMS script first -->
   <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
-  <!-- THIS IS THE NEW SCRIPT THAT FORCES THE CONFIGURATION. IT CANNOT BE IGNORED. -->
+  <!-- This script manually provides the configuration directly to the CMS -->
   <script>
     CMS.init({
       config: {
         backend: {
           name: 'github',
-          repo: 'cheezfish/travel-lust-magazine', // Your repo path
+          repo: 'cheezfish/travel-lust-magazine',
           branch: 'main',
           auth_type: 'github',
-          app_id: 'Ov23liEqTFb36oclI64c', // This is critical
+
+          // ================================================================
+          // CRITICAL STEP: Replace the text below with your Client ID
+          // ================================================================
+          app_id: 'Ov23liEqTFb36oclI64c',
+
         },
         media_folder: 'assets/pdfs',
         public_folder: '/assets/pdfs',
