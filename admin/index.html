@@ -4,10 +4,44 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
-  <link href="/assets/config.yml" type="text/yaml" rel="cms-config-url">
+  <!-- The failed <link> tag is gone. -->
 </head>
 <body>
-  <!-- By moving the script here, we guarantee the <body> exists before it runs -->
+  <!-- Load the main CMS script first -->
   <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <!-- THIS IS THE NEW SCRIPT THAT FORCES THE CONFIGURATION. IT CANNOT BE IGNORED. -->
+  <script>
+    CMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'cheezfish/travel-lust-magazine', // Your repo path
+          branch: 'main',
+          auth_type: 'github',
+          app_id: 'Ov23liEqTFb36oclI64c', // This is critical
+        },
+        media_folder: 'assets/pdfs',
+        public_folder: '/assets/pdfs',
+        collections: [
+          {
+            name: 'issues',
+            label: 'Magazine Issues',
+            folder: 'issues',
+            create: true,
+            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+            fields: [
+              { label: 'Title', name: 'title', widget: 'string' },
+              { label: 'Publish Date', name: 'date', widget: 'datetime' },
+              { label: 'Summary', name: 'summary', widget: 'text' },
+              { label: 'Issue PDF', name: 'pdf_file', widget: 'file' },
+              { label: 'Is this the Featured Issue?', name: 'isFeatured', widget: 'boolean', default: true },
+              { label: 'Layout', name: 'layout', widget: 'hidden', default: 'issue.njk' },
+            ],
+          },
+        ],
+      },
+    });
+  </script>
 </body>
 </html>
