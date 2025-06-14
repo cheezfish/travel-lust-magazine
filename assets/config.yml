@@ -1,14 +1,18 @@
-# THIS IS THE PART THAT TELLS THE CMS HOW TO CONNECT TO YOUR GITHUB
+# This tells the CMS how to connect to your GitHub
 backend:
   name: github
-  repo: cheezfish/travel-lust-magazine 
+  repo: cheezfish/travel-lust-magazine # Your repository path
   branch: main
+  
+  # --- THIS IS THE NEW SECTION THAT FIXES THE LOGIN ---
+  auth_type: github
+  app_id: Ov23liEqTFb36oclI64c
 
-# THIS TELLS THE CMS WHERE TO STORE UPLOADED PDFS
+# This tells the CMS where to store uploaded PDFs
 media_folder: "assets/pdfs"
 public_folder: "/assets/pdfs"
 
-# THIS DEFINES THE "NEW ISSUE" FORM YOUR UNCLE WILL USE
+# This defines the "New Issue" form
 collections:
   - name: "issues"
     label: "Magazine Issues"
