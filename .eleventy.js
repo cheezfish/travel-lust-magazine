@@ -1,27 +1,28 @@
 // .eleventy.js
 
 module.exports = function(eleventyConfig) {
-  // Tell Eleventy to copy our static folders to the final website
-  eleventyConfig.addPassthroughCopy("admin");
+  // THIS IS THE MOST IMPORTANT SECTION FOR THIS FIX
+  // It explicitly tells Eleventy to find the 'admin' folder in your
+  // project root and copy its entire contents to the output folder.
+  eleventyConfig.addPassthroughCopy("./admin/");
+
+  // These are your other copy commands, which are also correct.
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("assets");
 
-  // A helper function to make dates look nice (e.g., "January 15, 2024")
+  // A helper function to make dates look nice
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return new Date(dateObj).toLocaleDateString("en-US", {
       year: 'numeric', month: 'long', day: 'numeric'
     });
   });
 
-  // Create a custom collection for the single featured issue
+  // Your custom collections for featured and archived issues
   eleventyConfig.addCollection("featuredIssue", function(collectionApi) {
-    // Find the very first item that has isFeatured: true
     return collectionApi.getAll().reverse().find(item => item.data.isFeatured);
   });
 
-  // Create a custom collection for all archived (non-featured) issues
   eleventyConfig.addCollection("archivedIssues", function(collectionApi) {
-    // Filter for all items that DO NOT have isFeatured: true
     return collectionApi.getAll().reverse().filter(item => !item.data.isFeatured);
   });
 
