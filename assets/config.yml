@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: cheezfish/travel-lust-magazine # Your repository path
+  branch: main
+  # Sveltia's authentication is simpler and more direct
+  auth_type: implicit
+  # You may not even need the app_id, but we will include it for robustness
+  app_id: Ov23liEqTFb36oclI64c
+
+# This tells the CMS where to find itself
+publish_mode: editorial_workflow
+
+media_folder: 'assets/pdfs'
+public_folder: '/assets/pdfs'
+
+collections:
+  - name: 'issues'
+    label: 'Magazine Issues'
+    folder: 'issues'
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - name: 'title'
+        label: 'Title'
+        widget: 'string'
+      - name: 'date'
+        label: 'Publish Date'
+        widget: 'datetime'
+      - name: 'summary'
+        label: 'Summary'
+        widget: 'text'
+      - name: 'pdf_file'
+        label: 'Issue PDF'
+        widget: 'file'
+      - name: 'isFeatured'
+        label: 'Is this the Featured Issue?'
+        widget: 'boolean'
+        default: true
