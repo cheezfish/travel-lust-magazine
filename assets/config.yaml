@@ -1,7 +1,7 @@
 # THIS IS THE PART THAT TELLS THE CMS HOW TO CONNECT TO YOUR GITHUB
 backend:
   name: github
-  repo: cheezfish/travel-lust-magazine # <-- IMPORTANT: REPLACE THIS
+  repo: cheezfish/travel-lust-magazine 
   branch: main
 
 # THIS TELLS THE CMS WHERE TO STORE UPLOADED PDFS
