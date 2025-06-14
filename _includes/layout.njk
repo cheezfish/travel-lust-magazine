@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | Travel Lust Magazine</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Travel Lust Magazine</h1>
+        <p>A Periodical by an Elderly Uncle with Wanderlust</p>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/submissions/">Submissions</a>
+        </nav>
+    </header>
+    <main>
+        {{ content | safe }}
+    </main>
+    <footer>
+        <p>© 2024 Travel Lust Magazine. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# THIS IS THE PART THAT TELLS THE CMS HOW TO CONNECT TO YOUR GITHUB
+backend:
+  name: github
+  repo: your-github-username/travel-lust-magazine # <-- IMPORTANT: REPLACE THIS
+  branch: main
+
+# THIS TELLS THE CMS WHERE TO STORE UPLOADED PDFS
+media_folder: "assets/pdfs"
+public_folder: "/assets/pdfs"
+
+# THIS DEFINES THE "NEW ISSUE" FORM YOUR UNCLE WILL USE
+collections:
+  - name: "issues"
+    label: "Magazine Issues"
+    folder: "issues"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Summary", name: "summary", widget: "text", hint: "A short teaser for the homepage." }
+      - { label: "Issue PDF", name: "pdf_file", widget: "file" }
+      - { label: "Is this the Featured Issue?", name: "isFeatured", widget: "boolean", default: true }
+      - { label: "Layout", name: "layout", widget: "hidden", default: "issue.njk" }

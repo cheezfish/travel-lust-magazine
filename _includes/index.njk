@@ -1,0 +1,41 @@
+---
+layout: 'layout.njk'
+title: 'Home'
+---
+
+{# This code finds the featured issue and separates it from the archive #}
+{% set issues = collections.all | reverse %}
+{% set featuredIssue = issues | find("data.isFeatured", true) %}
+{% set archivedIssues = issues | filter("data.isFeatured", false) %}
+
+{# --- FEATURED ISSUE SECTION --- #}
+{% if featuredIssue %}
+<section class="featured">
+    <h2>Current Featured Issue</h2>
+    <article>
+        <h3><a href="{{ featuredIssue.url }}">{{ featuredIssue.data.title }}</a></h3>
+        <p><em>Published on: {{ featuredIssue.date | readableDate }}</em></p>
+        {% if featuredIssue.data.summary %}
+            <p>{{ featuredIssue.data.summary }}</p>
+        {% endif %}
+        <a href="{{ featuredIssue.url }}" class="read-button">Read This Issue</a>
+    </article>
+</section>
+{% else %}
+    <p>Welcome! The next issue is coming soon.</p>
+{% endif %}
+
+
+{# --- ARCHIVE SECTION --- #}
+<section class="archive">
+    <h2>Archive</h2>
+    <ul>
+        {% for issue in archivedIssues %}
+            <li>
+                <a href="{{ issue.url }}">{{ issue.data.title }}</a> - <span>{{ issue.date | readableDate }}</span>
+            </li>
+        {% else %}
+            <li>No archived issues yet.</li>
+        {% endfor %}
+    </ul>
+</section>
