@@ -1,13 +1,14 @@
+# This is the Sveltia CMS configuration file
+
 backend:
   name: github
   repo: cheezfish/travel-lust-magazine # Your repository path
   branch: main
-  # Sveltia's authentication is simpler and more direct
+  # This is the simpler, more direct authentication method.
+  # It does not use any external servers.
   auth_type: implicit
-  # You may not even need the app_id, but we will include it for robustness
-  app_id: Ov23liEqTFb36oclI64c
 
-# This tells the CMS where to find itself
+# This setting is recommended by Sveltia for a better user experience
 publish_mode: editorial_workflow
 
 media_folder: 'assets/pdfs'
@@ -36,3 +37,4 @@ collections:
         label: 'Is this the Featured Issue?'
         widget: 'boolean'
         default: true
+      # We no longer need the hidden layout field; Sveltia is smarter
