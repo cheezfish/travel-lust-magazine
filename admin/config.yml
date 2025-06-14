@@ -1,40 +1,25 @@
-# This is the Sveltia CMS configuration file
+# This is the Pages CMS configuration file
 
 backend:
   name: github
   repo: cheezfish/travel-lust-magazine # Your repository path
   branch: main
-  # This is the simpler, more direct authentication method.
-  # It does not use any external servers.
+  # This is the simplest authentication method. It does not need an app_id.
   auth_type: implicit
 
-# This setting is recommended by Sveltia for a better user experience
-publish_mode: editorial_workflow
-
-media_folder: 'assets/pdfs'
-public_folder: '/assets/pdfs'
+# Standard media folder configuration
+media_folder: "assets/pdfs"
 
 collections:
-  - name: 'issues'
-    label: 'Magazine Issues'
-    folder: 'issues'
+  - name: "issues"
+    label: "Magazine Issues"
+    label_singular: "Magazine Issue"
+    folder: "issues"
     create: true
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - name: 'title'
-        label: 'Title'
-        widget: 'string'
-      - name: 'date'
-        label: 'Publish Date'
-        widget: 'datetime'
-      - name: 'summary'
-        label: 'Summary'
-        widget: 'text'
-      - name: 'pdf_file'
-        label: 'Issue PDF'
-        widget: 'file'
-      - name: 'isFeatured'
-        label: 'Is this the Featured Issue?'
-        widget: 'boolean'
-        default: true
-      # We no longer need the hidden layout field; Sveltia is smarter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Issue PDF", name: "pdf_file", widget: "file" }
+      - { label: "Is this the Featured Issue?", name: "isFeatured", widget: "boolean", default: true }
