@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@11ty/eleventy": "^3.1.1"
+  },
+  "devDependencies": {
+    "eleventy-auto-cache-buster": "^0.8.1"
   }
 }
-

@@ -1,5 +1,7 @@
 // .eleventy.js
 
+const eleventyAutoCacheBuster = require("eleventy-auto-cache-buster");
+
 module.exports = function(eleventyConfig) {
   // This copies the admin panel to your final site. It's crucial.
   eleventyConfig.addPassthroughCopy("admin");
