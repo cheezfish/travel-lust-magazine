@@ -1,42 +1,56 @@
 ---
 layout: 'layout.njk'
 title: 'Home'
+permalink: /index.html
 ---
 
-{# The logic is now in .eleventy.js! We just use the collections directly. #}
-{% set featuredIssue = collections.featuredIssue %}
-{% set archivedIssues = collections.archivedIssues %}
+{# =================================================================== #}
+{# THIS IS THE CORRECT GALLERY CODE.                                   #}
+{# The old manual filtering logic at the top has been REMOVED.         #}
+{# It now uses the clean collections from your .eleventy.js file.      #}
+{# =================================================================== #}
 
 {# --- FEATURED ISSUE SECTION --- #}
+{% set featuredIssue = collections.featuredIssue %}
 {% if featuredIssue %}
-<section class="featured">
-    <h2>Current Featured Issue</h2>
-    <article>
-        <h3><a href="{{ featuredIssue.url }}">{{ featuredIssue.data.title }}</a></h3>
-        <p><em>Published on: {{ featuredIssue.date | readableDate }}</em></p>
-        {% if featuredIssue.data.summary %}
-            <p>{{ featuredIssue.data.summary }}</p>
-        {% endif %}
-        <a href="{{ featuredIssue.url }}" class="read-button">Read This Issue</a>
-    </article>
+<section class="featured-issue">
+    <h2 class="section-title">Current Issue</h2>
+    <a href="{{ featuredIssue.url }}" class="featured-card">
+        <div class="featured-image-wrapper">
+            {# This line looks for the 'thumbnail' data you uploaded #}
+            <img src="{{ featuredIssue.data.thumbnail }}" alt="Cover for {{ featuredIssue.data.title }}">
+        </div>
+        <div class="featured-content">
+            <h3>{{ featuredIssue.data.title }}</h3>
+            <p class="issue-date">{{ featuredIssue.date | readableDate }}</p>
+            {% if featuredIssue.data.summary %}
+                <p class="summary">{{ featuredIssue.data.summary }}</p>
+            {% endif %}
+            <span class="read-button">Read This Issue →</span>
+        </div>
+    </a>
 </section>
 {% else %}
-    <h2>Welcome to Travel Lust</h2>
-    <p>The first issue will be published soon. Check back later!</p>
+    <p>Welcome! The next issue is coming soon.</p>
 {% endif %}
 
 
-{# --- ARCHIVE SECTION --- #}
+{# --- ARCHIVE GALLERY SECTION --- #}
+{% set archivedIssues = collections.archivedIssues %}
 <section class="archive">
-    <h2>Archive</h2>
-    <ul>
-        {# We loop through the pre-filtered archivedIssues collection #}
+    <h2 class="section-title">Archive</h2>
+    <div class="archive-gallery">
         {% for issue in archivedIssues %}
-            <li>
-                <a href="{{ issue.url }}">{{ issue.data.title }}</a> - <span>{{ issue.date | readableDate }}</span>
-            </li>
+            <a href="{{ issue.url }}" class="archive-card">
+                {# This line also looks for the 'thumbnail' data #}
+                <img src="{{ issue.data.thumbnail }}" alt="Cover for {{ issue.data.title }}" class="card-image" loading="lazy">
+                <div class="card-overlay">
+                    <h4 class="card-title">{{ issue.data.title }}</h4>
+                    <p class="card-date">{{ issue.date | readableDate }}</p>
+                </div>
+            </a>
         {% else %}
-            <li>No archived issues yet.</li>
+            <p>No archived issues yet.</p>
         {% endfor %}
-    </ul>
+    </div>
 </section>
