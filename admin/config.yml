@@ -5,7 +5,9 @@ backend:
   # IMPORTANT: Replace this with your actual GitHub username and repository name
   repo: cheezfish/travel-lust-magazine
   branch: main # Or master, or whatever your main branch is
-  auth_type: pkce
+  site_domain: https://travellustmagazine.com
+  base_url: https://travellustmagazine.com
+  auth_endpoint: /api/auth
   # IMPORTANT: You will get this ID in Step 4
   app_id: Ov23liEqTFb36oclI64c
 
