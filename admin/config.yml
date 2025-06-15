@@ -1,25 +1,51 @@
-# This is the Pages CMS configuration file
+# /admin/config.yml - THE PERFECTED VERSION
 
 backend:
   name: github
-  repo: cheezfish/travel-lust-magazine # Your repository path
-  branch: main
-  # This is the simplest authentication method. It does not need an app_id.
-  auth_type: implicit
+  # IMPORTANT: Replace this with your actual GitHub username and repository name
+  repo: cheezfish/travel-lust-magazine
+  branch: main # Or master, or whatever your main branch is
+  auth_type: pkce
+  # IMPORTANT: You will get this ID in Step 4
+  app_id: Ov23liEqTFb36oclI64c
 
-# Standard media folder configuration
-media_folder: "assets/pdfs"
+# This tells the CMS where to store uploaded media.
+# The `assets/images` is for general images, but we will override for PDFs.
+media_folder: "assets/images"
+public_folder: "/assets/images"
 
 collections:
   - name: "issues"
     label: "Magazine Issues"
-    label_singular: "Magazine Issue"
-    folder: "issues"
+    folder: "issues" # Creates files in the 'issues' folder
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename for new issues
+    fields: # These are the form fields your uncle will see
+      - { label: "Issue Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Summary", name: "summary", widget: "text" }
-      - { label: "Issue PDF", name: "pdf_file", widget: "file" }
-      - { label: "Is this the Featured Issue?", name: "isFeatured", widget: "boolean", default: true }
+      
+      # This is the checkbox to control the featured article.
+      - label: "Make this the current Featured Issue?"
+        name: "isFeatured"
+        widget: "boolean"
+        default: false
+        
+      # A short summary for the homepage.
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      
+      # This is the PDF upload field. It's configured to save PDFs in their own folder.
+      - label: "Issue PDF"
+        name: "pdf_file"
+        widget: "file"
+        media_folder: "assets/pdfs" # Overrides the main media_folder
+        public_folder: "/assets/pdfs" # The URL path to the PDF
+        
+  - name: "other_pages"
+    label: "Other Pages"
+    files:
+      - file: "submissions.md"
+        label: "Submissions Page"
+        name: "submissions"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }

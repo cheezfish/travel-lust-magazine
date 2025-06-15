@@ -1,23 +1,24 @@
 // .eleventy.js
 
 module.exports = function(eleventyConfig) {
-  // THIS IS THE MOST IMPORTANT SECTION FOR THIS FIX
-  // It explicitly tells Eleventy to find the 'admin' folder in your
-  // project root and copy its entire contents to the output folder.
-  eleventyConfig.addPassthroughCopy("./admin/");
+  // This copies the admin panel to your final site. It's crucial.
+  eleventyConfig.addPassthroughCopy("admin");
 
-  // These are your other copy commands, which are also correct.
-  eleventyConfig.addPassthroughCopy("css");
+  // This copies all assets, including the new 'pdfs' subfolder.
   eleventyConfig.addPassthroughCopy("assets");
+  
+  // This copies your CSS.
+  eleventyConfig.addPassthroughCopy("css");
 
-  // A helper function to make dates look nice
+  // A helper function to make dates look nice (already in your file)
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return new Date(dateObj).toLocaleDateString("en-US", {
       year: 'numeric', month: 'long', day: 'numeric'
     });
   });
 
-  // Your custom collections for featured and archived issues
+  // Your collection logic is PERFECT for this setup. It automatically
+  // finds the item where 'isFeatured' is true.
   eleventyConfig.addCollection("featuredIssue", function(collectionApi) {
     return collectionApi.getAll().reverse().find(item => item.data.isFeatured);
   });
