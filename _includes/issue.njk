@@ -5,15 +5,113 @@ layout: 'layout.njk'
     <h2>{{ title }}</h2>
     <p><em>Published on: {{ date | readableDate }}</em></p>
 
-    <div class="pdf-container">
-        <iframe src="{{ pdf_file }}" title="{{ title }}"></iframe>
+    <div class="pdf-viewer">
+        <!-- Primary method: Object tag (most reliable for PDFs) -->
+        <object 
+            data="{{ pdf_file }}#toolbar=1&navpanes=1&scrollbar=1" 
+            type="application/pdf" 
+            width="100%" 
+            height="800px"
+            style="border: 1px solid #ccc;">
+            
+            <!-- Fallback: iframe -->
+            <iframe 
+                src="{{ pdf_file }}" 
+                width="100%" 
+                height="800px"
+                style="border: 1px solid #ccc;">
+                
+                <!-- Final fallback: direct link -->
+                <p>
+                    Your browser cannot display PDFs inline. 
+                    <a href="{{ pdf_file }}" target="_blank">Click here to open the PDF in a new tab</a>
+                </p>
+            </iframe>
+        </object>
     </div>
 
-    <p class="download-link">
-        Having trouble viewing? <a href="{{ pdf_file }}" download>Download the PDF directly</a>.
-    </p>
+    <div class="pdf-controls" style="margin: 20px 0; text-align: center;">
+        <a href="{{ pdf_file }}" target="_blank" class="btn">📖 Open in New Tab</a>
+        <a href="{{ pdf_file }}" download class="btn">⬇️ Download PDF</a>
+        <button onclick="toggleFullscreen()" class="btn">🔍 Toggle Fullscreen</button>
+    </div>
 
     <hr>
     <h3>Comments & Thoughts</h3>
     <p>We'd love to hear what you think! Visit our <a href="/submissions/">submissions page</a> to send us a message.</p>
 </article>
+
+<style>
+.pdf-viewer {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    background: #007cba;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background: #005a8b;
+}
+
+button.btn {
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .pdf-viewer object,
+    .pdf-viewer iframe {
+        height: 500px;
+    }
+}
+</style>
+
+<script>
+function toggleFullscreen() {
+    const pdfViewer = document.querySelector('.pdf-viewer');
+    if (pdfViewer.style.position === 'fixed') {
+        // Exit fullscreen
+        pdfViewer.style.position = '';
+        pdfViewer.style.top = '';
+        pdfViewer.style.left = '';
+        pdfViewer.style.width = '';
+        pdfViewer.style.height = '';
+        pdfViewer.style.zIndex = '';
+        pdfViewer.style.background = '';
+    } else {
+        // Enter fullscreen
+        pdfViewer.style.position = 'fixed';
+        pdfViewer.style.top = '0';
+        pdfViewer.style.left = '0';
+        pdfViewer.style.width = '100vw';
+        pdfViewer.style.height = '100vh';
+        pdfViewer.style.zIndex = '9999';
+        pdfViewer.style.background = 'white';
+    }
+}
+
+// Check if PDF loads correctly
+document.addEventListener('DOMContentLoaded', function() {
+    const pdfObject = document.querySelector('object[type="application/pdf"]');
+    if (pdfObject) {
+        pdfObject.addEventListener('load', function() {
+            console.log('PDF loaded successfully');
+        });
+        
+        pdfObject.addEventListener('error', function() {
+            console.log('PDF failed to load');
+            // Could add logic here to show additional fallback
+        });
+    }
+});
+</script>
