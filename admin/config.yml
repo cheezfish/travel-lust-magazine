@@ -33,7 +33,7 @@ collections:
       - label: "Issue PDF"
         name: "pdf_file"
         widget: "file"
-        media_folder: "assets/pdfs"
+        media_folder: "/assets/pdfs"
         public_folder: "/assets/pdfs"
       
       # --- THIS IS THE FIX ---
