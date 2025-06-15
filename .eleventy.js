@@ -22,7 +22,7 @@ module.exports = function(eleventyConfig) {
   // 1. Create ONE master collection of all valid issues first.
   // The glob path is now correct for your structure (no "src/").
   eleventyConfig.addCollection("issuesMaster", function(collectionApi) {
-    const issues = collectionApi.getFilteredByGlob("issues/**/*.md");
+    const issues = collectionApi.getFilteredByGlob("issues/*.md");
     console.log(`[DEBUG] Found ${issues.length} total issues in /issues/`);
     return issues;
   });
