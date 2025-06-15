@@ -24,6 +24,13 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Issue Title", name: "title", widget: "string" }
+      # --- ADD THIS ENTIRE FIELD ---
+      - label: "Thumbnail / Cover Image"
+        name: "thumbnail"
+        widget: "image"
+        media_folder: "/assets/images/thumbnails"
+        public_folder: "/assets/images/thumbnails"
+      # --- END OF NEW FIELD ---
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - label: "Make this the current Featured Issue?"
         name: "isFeatured"

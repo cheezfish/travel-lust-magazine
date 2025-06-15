@@ -1,34 +1,40 @@
-// .eleventy.js
+// .eleventy.js - THE UPGRADED VERSION
 
 const eleventyAutoCacheBuster = require("eleventy-auto-cache-buster");
 
 module.exports = function(eleventyConfig) {
-  // This copies the admin panel to your final site. It's crucial.
+  // --- PASSTHROUGH COPIES (No changes here) ---
   eleventyConfig.addPassthroughCopy("admin");
-
-  // This copies all assets, including the new 'pdfs' subfolder.
   eleventyConfig.addPassthroughCopy("assets");
-  
-  // This copies your CSS.
   eleventyConfig.addPassthroughCopy("css");
 
-  // A helper function to make dates look nice (already in your file)
+  // --- FILTERS (No changes here) ---
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return new Date(dateObj).toLocaleDateString("en-US", {
       year: 'numeric', month: 'long', day: 'numeric'
     });
   });
 
-  // Your collection logic is PERFECT for this setup. It automatically
-  // finds the item where 'isFeatured' is true.
+  // ===================================================================
+  // WHAT'S CHANGED: SMARTER, MORE PRECISE COLLECTIONS
+  // This is the fix to remove unwanted pages from your lists.
+  // We now use `getFilteredByGlob` to ONLY look inside the "issues" folder.
+  // ===================================================================
+
+  // 1. Find the featured issue from ONLY the magazine issues.
   eleventyConfig.addCollection("featuredIssue", function(collectionApi) {
-    return collectionApi.getAll().reverse().find(item => item.data.isFeatured);
+    return collectionApi.getFilteredByGlob("issues/**/*.md")
+      .find(item => item.data.isFeatured);
   });
 
+  // 2. Get the archived issues from ONLY the magazine issues.
   eleventyConfig.addCollection("archivedIssues", function(collectionApi) {
-    return collectionApi.getAll().reverse().filter(item => !item.data.isFeatured);
+    return collectionApi.getFilteredByGlob("issues/**/*.md")
+      .filter(item => !item.data.isFeatured)
+      .reverse(); // .reverse() is now here for correct ordering
   });
 
+  // --- 11TY CONFIG (No changes here) ---
   return {
     dir: {
       input: ".",

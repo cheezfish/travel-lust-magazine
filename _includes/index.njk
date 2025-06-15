@@ -3,43 +3,53 @@ layout: 'layout.njk'
 title: 'Home'
 ---
 
-{# This code finds the featured issue and separates it from the archive #}
-{% set issues = collections.all | reverse %}
-{% set featuredIssue = issues | find("data.isFeatured", true) %}
-{% set archivedIssues = issues | filter("data.isFeatured", false) %}
+{# =================================================================== #}
+{# WHAT'S CHANGED: FROM A LIST TO A GALLERY                          #}
+{# The logic at the top is gone, we now use the clean collections.     #}
+{# The featured section is now a two-column card.                    #}
+{# The archive is now a `div` that creates a grid of thumbnail cards.  #}
+{# =================================================================== #}
 
 {# --- FEATURED ISSUE SECTION --- #}
+{% set featuredIssue = collections.featuredIssue %}
 {% if featuredIssue %}
-<section class="featured-issue issue">
-    <h2>Current Featured Issue</h2>
-    <article>
-        <h3>{{ featuredIssue.data.title }}</h3>
-        <p class="issue-date">Published on: {{ featuredIssue.date | readableDate }}</p>
-        {% if featuredIssue.data.summary %}
-            <p>{{ featuredIssue.data.summary }}</p>
-        {% endif %}
-        
-        {# THIS IS THE FIX: Link to the issue's page URL #}
-        <a href="{{ featuredIssue.url }}" class="issue-button-primary">Read This Issue</a>
-    </article>
+<section class="featured-issue">
+    <h2 class="section-title">Current Issue</h2>
+    <a href="{{ featuredIssue.url }}" class="featured-card">
+        <div class="featured-image-wrapper">
+            {# Assumes you have a `thumbnail` field in your front matter #}
+            <img src="{{ featuredIssue.data.thumbnail }}" alt="Cover for {{ featuredIssue.data.title }}">
+        </div>
+        <div class="featured-content">
+            <h3>{{ featuredIssue.data.title }}</h3>
+            <p class="issue-date">{{ featuredIssue.date | readableDate }}</p>
+            {% if featuredIssue.data.summary %}
+                <p class="summary">{{ featuredIssue.data.summary }}</p>
+            {% endif %}
+            <span class="read-button">Read This Issue →</span>
+        </div>
+    </a>
 </section>
 {% else %}
     <p>Welcome! The next issue is coming soon.</p>
 {% endif %}
 
 
-{# --- ARCHIVE SECTION --- #}
+{# --- ARCHIVE GALLERY SECTION --- #}
+{% set archivedIssues = collections.archivedIssues %}
 <section class="archive">
-    <h2>Archive</h2>
-    <ul class="archive-list">
+    <h2 class="section-title">Archive</h2>
+    <div class="archive-gallery">
         {% for issue in archivedIssues %}
-            <li>
-                {# THIS IS THE FIX: This link now also goes to the issue's page #}
-                <a href="{{ issue.url }}">{{ issue.data.title }}</a> 
-                <span class="issue-date">- {{ issue.date | readableDate }}</span>
-            </li>
+            <a href="{{ issue.url }}" class="archive-card">
+                <img src="{{ issue.data.thumbnail }}" alt="Cover for {{ issue.data.title }}" class="card-image" loading="lazy">
+                <div class="card-overlay">
+                    <h4 class="card-title">{{ issue.data.title }}</h4>
+                    <p class="card-date">{{ issue.date | readableDate }}</p>
+                </div>
+            </a>
         {% else %}
-            <li>No archived issues yet.</li>
+            <p>No archived issues yet.</p>
         {% endfor %}
-    </ul>
+    </div>
 </section>
