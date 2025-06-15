@@ -1,31 +1,27 @@
-export async function onRequest(context) {
-    const {
-        request, // same as existing Worker API
-        env, // same as existing Worker API
-        params, // if filename includes [id] or [[path]]
-        waitUntil, // same as ctx.waitUntil in existing Worker API
-        next, // used for middleware or to fetch assets
-        data, // arbitrary space for passing data between middlewares
-    } = context;
+// functions/api/auth.js
 
+export async function onRequest(context) {
+    const { env, request } = context;
     const client_id = env.GITHUB_CLIENT_ID;
+
+    // IMPORTANT: Make sure GITHUB_CLIENT_ID is set in your Cloudflare Pages environment variables
+    if (!client_id) {
+        return new Response("GITHUB_CLIENT_ID not set", { status: 500 });
+    }
 
     try {
         const url = new URL(request.url);
         const redirectUrl = new URL('https://github.com/login/oauth/authorize');
         redirectUrl.searchParams.set('client_id', client_id);
-        redirectUrl.searchParams.set('redirect_uri', url.origin + '/api/callback');
+        // This callback MUST match the one you set in your GitHub OAuth App
+        redirectUrl.searchParams.set('redirect_uri', `${url.origin}/api/callback`);
         redirectUrl.searchParams.set('scope', 'repo user');
-        redirectUrl.searchParams.set(
-            'state',
-            crypto.getRandomValues(new Uint8Array(12)).join(''),
-        );
-        return Response.redirect(redirectUrl.href, 301);
+        redirectUrl.searchParams.set('state', crypto.randomUUID()); // Use a secure random state
+
+        return Response.redirect(redirectUrl.href, 302); // Use 302 for temporary redirect
 
     } catch (error) {
         console.error(error);
-        return new Response(error.message, {
-            status: 500,
-        });
+        return new Response(error.message, { status: 500 });
     }
 }
