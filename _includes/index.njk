@@ -4,10 +4,10 @@ title: 'Home'
 ---
 
 {# =================================================================== #}
-{# WHAT'S CHANGED: FROM A LIST TO A GALLERY                          #}
-{# The logic at the top is gone, we now use the clean collections.     #}
-{# The featured section is now a two-column card.                    #}
-{# The archive is now a `div` that creates a grid of thumbnail cards.  #}
+{# THIS IS THE NEW GALLERY CODE                                        #}
+{# It uses the clean collections from your updated .eleventy.js file.  #}
+{# The featured section is a two-column card.                        #}
+{# The archive is a grid of thumbnail cards.                         #}
 {# =================================================================== #}
 
 {# --- FEATURED ISSUE SECTION --- #}
@@ -17,7 +17,7 @@ title: 'Home'
     <h2 class="section-title">Current Issue</h2>
     <a href="{{ featuredIssue.url }}" class="featured-card">
         <div class="featured-image-wrapper">
-            {# Assumes you have a `thumbnail` field in your front matter #}
+            {# This line looks for the 'thumbnail' data from your CMS #}
             <img src="{{ featuredIssue.data.thumbnail }}" alt="Cover for {{ featuredIssue.data.title }}">
         </div>
         <div class="featured-content">
@@ -42,6 +42,7 @@ title: 'Home'
     <div class="archive-gallery">
         {% for issue in archivedIssues %}
             <a href="{{ issue.url }}" class="archive-card">
+                {# This line also looks for the 'thumbnail' data #}
                 <img src="{{ issue.data.thumbnail }}" alt="Cover for {{ issue.data.title }}" class="card-image" loading="lazy">
                 <div class="card-overlay">
                     <h4 class="card-title">{{ issue.data.title }}</h4>
