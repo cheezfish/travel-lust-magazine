@@ -15,12 +15,6 @@ module.exports = function(eleventyConfig) {
     });
   });
 
-  // ===================================================================
-  // WHAT'S CHANGED: SMARTER, MORE PRECISE COLLECTIONS
-  // This is the fix to remove unwanted pages from your lists.
-  // We now use `getFilteredByGlob` to ONLY look inside the "issues" folder.
-  // ===================================================================
-
   // 1. Find the featured issue from ONLY the magazine issues.
   eleventyConfig.addCollection("featuredIssue", function(collectionApi) {
     return collectionApi.getFilteredByGlob("issues/**/*.md")
