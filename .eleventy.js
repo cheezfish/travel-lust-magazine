@@ -1,40 +1,57 @@
-// .eleventy.js - THE UPGRADED VERSION
-
-const eleventyAutoCacheBuster = require("eleventy-auto-cache-buster");
+// .eleventy.js - THE CORRECTED VERSION FOR YOUR ROOT STRUCTURE
 
 module.exports = function(eleventyConfig) {
-  // --- PASSTHROUGH COPIES (No changes here) ---
+  // --- PASSTHROUGH COPIES ---
+  // These paths are now correct for your structure (no "src/").
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("css");
 
-  // --- FILTERS (No changes here) ---
+  // --- FILTERS ---
   eleventyConfig.addFilter("readableDate", (dateObj) => {
+    if (!dateObj) return ""; // Prevent errors on empty dates
     return new Date(dateObj).toLocaleDateString("en-US", {
       year: 'numeric', month: 'long', day: 'numeric'
     });
   });
 
   // ===================================================================
-  // WHAT'S CHANGED: SMARTER, MORE PRECISE COLLECTIONS
-  // This is the fix to remove unwanted pages from your lists.
-  // We now use `getFilteredByGlob` to ONLY look inside the "issues" folder.
+  // THE ROBUST COLLECTION LOGIC (with corrected paths)
   // ===================================================================
 
-  // 1. Find the featured issue from ONLY the magazine issues.
+  // 1. Create ONE master collection of all valid issues first.
+  // The glob path is now correct for your structure (no "src/").
+  eleventyConfig.addCollection("issuesMaster", function(collectionApi) {
+    const issues = collectionApi.getFilteredByGlob("issues/**/*.md");
+    console.log(`[DEBUG] Found ${issues.length} total issues in /issues/`);
+    return issues;
+  });
+
+  // 2. Derive the featured issue from the master list.
   eleventyConfig.addCollection("featuredIssue", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("issues/**/*.md")
-      .find(item => item.data.isFeatured);
+    const masterList = collectionApi.getFilteredByTag("issuesMaster");
+    const featured = masterList.find(item => item.data.isFeatured);
+    if (featured) {
+      console.log(`[DEBUG] Found featured issue: ${featured.data.title}`);
+    } else {
+      console.log("[DEBUG] No featured issue found.");
+    }
+    return featured;
   });
-
-  // 2. Get the archived issues from ONLY the magazine issues.
+  
+  // 3. Derive the archived issues from the master list.
   eleventyConfig.addCollection("archivedIssues", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("issues/**/*.md")
+    const masterList = collectionApi.getFilteredByTag("issuesMaster");
+    const archived = masterList
       .filter(item => !item.data.isFeatured)
-      .reverse(); // .reverse() is now here for correct ordering
+      .reverse();
+    console.log(`[DEBUG] Found ${archived.length} archived issues.`);
+    return archived;
   });
 
-  // --- 11TY CONFIG (No changes here) ---
+
+  // --- 11TY CONFIG ---
+  // The input directory is now correctly set to "." (the root).
   return {
     dir: {
       input: ".",
