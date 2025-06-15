@@ -1,12 +1,21 @@
+<!-- /admin/index.html - THE CORRECTED VERSION -->
+
 <!doctype html>
 <html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
-  <!-- This script loads the Decap CMS application -->
-  <script src="https://unpkg.com/decap-cms@3.1.0-beta.5/dist/decap-cms.js"></script>
+
+  <!--
+    The "defer" attribute is the key.
+    It tells the browser to download the script but wait to execute it
+    until the entire page (including the <body>) is ready.
+  -->
+  <script src="https://unpkg.com/decap-cms@3.1.0-beta.5/dist/decap-cms.js" defer></script>
+
 </head>
 <body>
+  <!-- The Decap CMS script will now successfully find this body and inject the admin panel here -->
 </body>
 </html>
