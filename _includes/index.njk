@@ -10,15 +10,17 @@ title: 'Home'
 
 {# --- FEATURED ISSUE SECTION --- #}
 {% if featuredIssue %}
-<section class="featured">
+<section class="featured-issue issue">
     <h2>Current Featured Issue</h2>
     <article>
-        <h3><a href="{{ featuredIssue.url }}">{{ featuredIssue.data.title }}</a></h3>
-        <p><em>Published on: {{ featuredIssue.date | readableDate }}</em></p>
+        <h3>{{ featuredIssue.data.title }}</h3>
+        <p class="issue-date">Published on: {{ featuredIssue.date | readableDate }}</p>
         {% if featuredIssue.data.summary %}
             <p>{{ featuredIssue.data.summary }}</p>
         {% endif %}
-        <a href="{{ featuredIssue.url }}" class="read-button">Read This Issue</a>
+        
+        {# THIS IS THE FIX: Link to the issue's page URL #}
+        <a href="{{ featuredIssue.url }}" class="issue-button-primary">Read This Issue</a>
     </article>
 </section>
 {% else %}
@@ -29,10 +31,12 @@ title: 'Home'
 {# --- ARCHIVE SECTION --- #}
 <section class="archive">
     <h2>Archive</h2>
-    <ul>
+    <ul class="archive-list">
         {% for issue in archivedIssues %}
             <li>
-                <a href="{{ issue.url }}">{{ issue.data.title }}</a> - <span>{{ issue.date | readableDate }}</span>
+                {# THIS IS THE FIX: This link now also goes to the issue's page #}
+                <a href="{{ issue.url }}">{{ issue.data.title }}</a> 
+                <span class="issue-date">- {{ issue.date | readableDate }}</span>
             </li>
         {% else %}
             <li>No archived issues yet.</li>

@@ -1,14 +1,14 @@
-# /admin/config.yml - CONFIGURED FOR MANUAL AUTH
+# /admin/config.yml - THE FINAL, CORRECTED VERSION
 
 backend:
   name: github
-  repo: cheezfish/travel-lust-magazine # Your repo
-  branch: main # Your main branch
+  repo: cheezfish/travel-lust-magazine
+  branch: main
   
-  # These lines are now required for the manual auth flow
+  # These lines are required for the manual auth flow
   base_url: https://travellustmagazine.com
-  auth_endpoint: /api/auth # Points to your new function
-  app_id: Ov23liEqTFb36oclI64c # Paste the Client ID from Step 2
+  auth_endpoint: /api/auth
+  app_id: Ov23liEqTFb36oclI64c
 
 # Optional but highly recommended for a better workflow
 publish_mode: editorial_workflow
@@ -16,7 +16,6 @@ publish_mode: editorial_workflow
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
-# ... the rest of your collections ...
 collections:
   - name: "issues"
     label: "Magazine Issues"
@@ -36,6 +35,10 @@ collections:
         widget: "file"
         media_folder: "assets/pdfs"
         public_folder: "/assets/pdfs"
+      
+      # --- THIS IS THE FIX ---
+      # This automatically adds the layout to every new file created by the CMS.
+      - { label: "Layout", name: "layout", widget: "hidden", default: "issue.njk" }
         
   - name: "other_pages"
     label: "Other Pages"
