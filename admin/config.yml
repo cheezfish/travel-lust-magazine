@@ -13,8 +13,8 @@ backend:
 # Optional but highly recommended for a better workflow
 publish_mode: editorial_workflow
 
-media_folder: "assets/images"
-public_folder: "/assets/images"
+media_folder: "/assets/pdfs"
+public_folder: "/assets/pdfs"
 
 collections:
   - name: "issues"
