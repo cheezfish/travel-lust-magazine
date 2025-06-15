@@ -4,10 +4,11 @@ title: 'Home'
 ---
 
 {# =================================================================== #}
-{# THIS IS THE NEW GALLERY CODE                                        #}
+{# THIS IS THE CORRECT GALLERY CODE                                    #}
 {# It uses the clean collections from your updated .eleventy.js file.  #}
 {# The featured section is a two-column card.                        #}
 {# The archive is a grid of thumbnail cards.                         #}
+{# The old, incorrect filtering logic at the top has been REMOVED.     #}
 {# =================================================================== #}
 
 {# --- FEATURED ISSUE SECTION --- #}
@@ -17,7 +18,7 @@ title: 'Home'
     <h2 class="section-title">Current Issue</h2>
     <a href="{{ featuredIssue.url }}" class="featured-card">
         <div class="featured-image-wrapper">
-            {# This line looks for the 'thumbnail' data from your CMS #}
+            {# This line looks for the 'thumbnail' data you uploaded #}
             <img src="{{ featuredIssue.data.thumbnail }}" alt="Cover for {{ featuredIssue.data.title }}">
         </div>
         <div class="featured-content">
