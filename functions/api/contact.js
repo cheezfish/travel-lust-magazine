@@ -15,8 +15,8 @@ export async function onRequestPost(context) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "submissions@your-verified-domain.com", // <-- ★★★ REPLACE WITH A 'from' ADDRESS ON YOUR VERIFIED DOMAIN ★★★
-        to: "your-personal-email@example.com",     // <-- ★★★ REPLACE WITH THE EMAIL ADDRESS YOU WANT TO RECEIVE MESSAGES AT ★★★
+        from: "submissions@travellustmagazine.com", // <-- ★★★ REPLACE WITH A 'from' ADDRESS ON YOUR VERIFIED DOMAIN ★★★
+        to: "themankymoo@gmail.com",     // <-- ★★★ REPLACE WITH THE EMAIL ADDRESS YOU WANT TO RECEIVE MESSAGES AT ★★★
         subject: `New submission from ${data.name}`,
         html: `
           <h2>New Contact Form Submission</h2>
